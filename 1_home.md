@@ -20,7 +20,8 @@
 <div style="width: 100%; clear: both; float: left; padding-top: 40px; padding-bottom: 40px;">
   <div style="width: 85%; margin: auto;">
     <div style="padding-left: 20px;float:left; width: 50%;">
-      <img style="border-radius: 50%; width: 100px; float:left;" src="https://lou.looker.com/assets/img/profile_picture/hank.ritter.jpg">
+      <img style="border-radius: 50%; width: 100px; float:left;"
+      src="https://lou.looker.com/assets/img/profile_picture/hank.ritter.jpg">
       <div style="float:left; text-align: left; padding-left: 5px; padding-top: 15px;">
         <p><span style="font-size: 16px;">Account Executive</span><br>
         <span style="font-weight: 300;">Hank Ritter<br>
@@ -28,7 +29,8 @@
       </div>
     </div>
     <div style="padding-left: 40px;float:left; width: 50%;">
-      <img style="border-radius: 50%; width: 100px; float:left;" src="https://lou.looker.com/assets/img/profile_picture/alex.dinsmoor.jpg">
+      <img style="border-radius: 50%; width: 100px; float:left;"
+      src="https://lou.looker.com/assets/img/profile_picture/alex.dinsmoor.jpg">
       <div style="float:left; text-align: left; padding-left: 10px; padding-top: 15px;">
         <p><span style="font-size: 16px;">Analyst</span><br>
         <span style="font-weight: 300;">Alex Dinsmoor<br>

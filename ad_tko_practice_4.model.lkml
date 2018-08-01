@@ -1,19 +1,13 @@
 connection: "video_store"
 
-# include: "*.view.lkml"         # include all views in this project
+include: "*.view.lkml"         # include all views in this project
 # include: "*.dashboard.lookml"  # include all dashboards in this project
 
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
+explore: rental_information {
+  from: rental
+  join: payment {
+    type: left_outer
+    sql_on: ${rental_information.rental_id} = ${payment.rental_id} ;;
+    relationship: one_to_one
+  }
+}
