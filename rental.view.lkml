@@ -59,6 +59,13 @@ view: rental {
     sql: ${TABLE}.return_date ;;
   }
 
+  dimension: staff_id {
+    type: yesno
+    sql: ${TABLE}.staff_id ;;
+  }
+
+  # late returns
+
   dimension: number_of_days_rented {
     type: number
     sql: DATEDIFF(${return_date},${rental_date}) ;;
@@ -79,14 +86,32 @@ view: rental {
 
   measure: percentage_late_returns {
     type: number
-    sql: 1.0 * (${count_late_returns} / ${count}) ;;
+    sql: 1.0 * (${count_late_returns} / nullif(${count},0)) ;;
     value_format_name: percent_2
   }
 
-  dimension: staff_id {
+  # films checked out
+
+  dimension: is_currently_checked_out {
     type: yesno
-    sql: ${TABLE}.staff_id ;;
+    sql: ${return_raw} is null ;;
   }
+
+  measure: count_currently_checked_out {
+    type: count
+    filters: {
+      field: is_currently_checked_out
+      value: "yes"
+    }
+  }
+
+  measure: percentage_of_inventory_currently_checked_out {
+    type: number
+    sql: 1.0 * (${count_currently_checked_out} / nullif(${inventory.count},0)) ;;
+    value_format_name: percent_2
+  }
+
+  # count and revenue information
 
   measure: count {
     type: count
@@ -95,6 +120,12 @@ view: rental {
 
   measure: revenue {
     type: sum
+    sql: ${payment.amount} ;;
+    value_format_name: usd
+  }
+
+  measure: avg_revenue_per_rental {
+    type: average
     sql: ${payment.amount} ;;
     value_format_name: usd
   }

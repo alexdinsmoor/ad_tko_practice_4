@@ -52,7 +52,7 @@ view: payment {
   }
 
   dimension: staff_id {
-    type: yesno
+    type: number
     sql: ${TABLE}.staff_id ;;
   }
 
