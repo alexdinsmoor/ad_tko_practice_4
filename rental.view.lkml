@@ -115,7 +115,6 @@ view: rental {
 
   measure: count {
     type: count
-    drill_fields: [rental_id, payment.count]
   }
 
   measure: revenue {

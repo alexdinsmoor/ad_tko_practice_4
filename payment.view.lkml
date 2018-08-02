@@ -10,6 +10,7 @@ view: payment {
   dimension: amount {
     type: number
     sql: ${TABLE}.amount ;;
+    value_format_name: usd
   }
 
   dimension: customer_id {

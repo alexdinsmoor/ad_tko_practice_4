@@ -20,3 +20,20 @@ explore: rental_information {
     relationship: many_to_one #because one inventory can be shared across multiple rental ids
   }
 }
+
+explore: inventory {
+  view_label: "Inventory Information"
+  # sql_always_where: (${rental_date} >= '2005-05-01' and ${rental_date} <= '2005-08-31');;
+  # added to ensure we evaluate complete only months with representative data
+  fields: [
+     ALL_FIELDS*,
+    -rental.avg_revenue_per_rental,
+    -rental.revenue
+  ]
+
+  join: rental {
+    type: left_outer
+    sql_on: ${inventory.inventory_id} = ${rental.inventory_id} ;;
+    relationship: one_to_many #because one inventory can be shared across multiple rental ids
+  }
+}
