@@ -57,6 +57,14 @@ view: rental_history_facts {
     }
   }
 
+  measure: 30_day_repeat_rental_rate {
+    description: "The percentage of customers who rent again within 30 days"
+    type: number
+    value_format_name: percent_1
+    sql: 1.0 * ${repeat_rental_count_within_30_days} / NULLIF(${count},0) ;;
+  }
+
+
   set: detail {
     fields: [rental_id, rental_date, next_rental_date, next_rental_id]
   }

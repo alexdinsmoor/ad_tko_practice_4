@@ -10,7 +10,71 @@ datagroup: caching_policy {
 
 persist_with: caching_policy
 
-explore: rental_history_facts {}
+# aggregate store information
+
+explore: store_information {
+  from: store
+  hidden: yes
+
+  join: address {
+    view_label: "Store Information"
+    fields:[address.address, address.district, address.postal_code, address.phone]
+    type: left_outer
+    sql_on: ${store_information.address_id} = ${address.address_id} ;;
+    relationship: one_to_one
+  }
+
+  join: city {
+    view_label: "Store Information"
+    fields: [city.city]
+    type: left_outer
+    sql_on: ${address.city_id} = ${city.city_id} ;;
+    relationship: many_to_one
+  }
+
+  join: country {
+    view_label: "Store Information"
+    fields: [country.country]
+    type: left_outer
+    sql_on: ${city.country_id} = ${country.country_id} ;;
+    relationship: many_to_one
+  }
+}
+
+#aggregate customer information
+
+explore: customer {
+  label: "Customer Information"
+  from: customer
+  view_label: "Customer Contact Info"
+
+  join: customer_address {
+    from: address
+    view_label: "Customer Contact Info"
+    fields:[customer_address.address, customer_address.district, customer_address.postal_code, customer_address.phone ]
+    type: left_outer
+    sql_on: ${customer.address_id} = ${customer_address.address_id} ;;
+    relationship: many_to_one
+  }
+
+  join: customer_city {
+    from: city
+    view_label: "Customer Contact Info"
+    fields:[customer_city.city]
+    type: left_outer
+    sql_on: ${customer_address.city_id} = ${customer_city.city_id} ;;
+    relationship: many_to_one
+  }
+
+  join: customer_country {
+    from: country
+    view_label: "Customer Contact Info"
+    fields:[customer_country.country]
+    type: left_outer
+    sql_on: ${customer_city.country_id} = ${customer_country.country_id} ;;
+    relationship: many_to_one
+  }
+}
 
 explore: rental_information {
   from: rental
@@ -28,6 +92,82 @@ explore: rental_information {
     sql_on: ${rental_information.inventory_id} = ${inventory.inventory_id} ;;
     relationship: many_to_one #because one inventory item can be shared across multiple rental ids
   }
+
+  # aggregate customer information
+
+  join: customer {
+    view_label: "Customer Contact Info"
+    type: left_outer
+    sql_on: ${rental_information.customer_id} = ${customer.customer_id} ;;
+    relationship: many_to_one
+  }
+
+  join: customer_address {
+    from: address
+    view_label: "Customer Contact Info"
+    fields:[customer_address.address, customer_address.district, customer_address.postal_code, customer_address.phone ]
+    type: left_outer
+    sql_on: ${customer.address_id} = ${customer_address.address_id} ;;
+    relationship: many_to_one
+  }
+
+  join: customer_city {
+    from: city
+    view_label: "Customer Contact Info"
+    fields:[customer_city.city]
+    type: left_outer
+    sql_on: ${customer_address.city_id} = ${customer_city.city_id} ;;
+    relationship: many_to_one
+  }
+
+  join: customer_country {
+    from: country
+    view_label: "Customer Contact Info"
+    fields:[customer_country.country]
+    type: left_outer
+    sql_on: ${customer_city.country_id} = ${customer_country.country_id} ;;
+    relationship: many_to_one
+  }
+
+  # aggregate store information
+
+  join: store {
+    type:  left_outer
+    sql_on: ${inventory.store_id} = ${store.store_id}  ;;
+    relationship: many_to_one
+  }
+
+  join: store_address {
+    from: address
+    view_label: "Store Information"
+    fields:[store_address.address, store_address.district, store_address.postal_code, store_address.phone]
+    type: left_outer
+    sql_on: ${store.address_id} = ${store_address.address_id} ;;
+    relationship: one_to_one
+  }
+
+  join: store_city {
+    from: city
+    view_label: "Store Information"
+    fields: [store_city.city]
+    type: left_outer
+    sql_on: ${store_address.city_id} = ${store_city.city_id} ;;
+    relationship: many_to_one
+  }
+
+  join: store_country {
+    from: country
+    view_label: "Store Information"
+    fields: [store_country.country]
+    type: left_outer
+    sql_on: ${store_city.country_id} = ${store_country.country_id} ;;
+    relationship: many_to_one
+  }
+
+  # aggregate film information
+
+
+
 }
 
 explore: inventory {
