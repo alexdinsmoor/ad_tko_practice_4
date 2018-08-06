@@ -2,6 +2,7 @@ view: payment {
   sql_table_name: sakila.payment ;;
 
   dimension: payment_id {
+    hidden: yes
     primary_key: yes
     type: number
     sql: ${TABLE}.payment_id ;;
@@ -14,11 +15,13 @@ view: payment {
   }
 
   dimension: customer_id {
+    hidden: yes
     type: number
     sql: ${TABLE}.customer_id ;;
   }
 
   dimension_group: last_update {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -47,18 +50,21 @@ view: payment {
   }
 
   dimension: rental_id {
+    hidden: yes
     type: number
     # hidden: yes
     sql: ${TABLE}.rental_id ;;
   }
 
   dimension: staff_id {
+    hidden: yes
     type: number
     sql: ${TABLE}.staff_id ;;
   }
 
   measure: count {
+    hidden: yes
     type: count
-    drill_fields: [payment_id, rental.rental_id]
+    drill_fields: [customer_rental_facts.detail*]
   }
 }

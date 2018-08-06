@@ -2,6 +2,7 @@ view: address {
   sql_table_name: sakila.address ;;
 
   dimension: address_id {
+    hidden: yes
     primary_key: yes
     type: number
     sql: ${TABLE}.address_id ;;
@@ -19,7 +20,7 @@ view: address {
 
   dimension: city_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.city_id ;;
   }
 
@@ -29,6 +30,7 @@ view: address {
   }
 
   dimension_group: last_update {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -48,11 +50,11 @@ view: address {
   }
 
   dimension: postal_code {
-    type: string
+    type: zipcode
     sql: ${TABLE}.postal_code ;;
   }
 
-  measure: count {
+  measure: address_count {
     type: count
     drill_fields: [address_id, city.city_id, customer.count]
   }

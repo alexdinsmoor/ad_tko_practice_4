@@ -2,6 +2,7 @@ view: film {
   sql_table_name: sakila.film ;;
 
   dimension: film_id {
+    hidden: yes
     primary_key: yes
     type: number
     sql: ${TABLE}.film_id ;;
@@ -13,12 +14,14 @@ view: film {
   }
 
   dimension: language_id {
-    type: yesno
+    hidden: yes
+    type: number
     # hidden: yes
     sql: ${TABLE}.language_id ;;
   }
 
   dimension_group: last_update {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -32,13 +35,23 @@ view: film {
     sql: ${TABLE}.last_update ;;
   }
 
-  dimension: length {
+  dimension: length_in_minutes {
     type: number
     sql: ${TABLE}.length ;;
   }
 
+  dimension: movie_length_tier {
+    description: "Movie runtime in minutes"
+    type: tier
+    tiers: [60,90,120,150]
+    style: integer
+    sql: ${length_in_minutes} ;;
+
+  }
+
   dimension: original_language_id {
-    type: yesno
+    hidden: yes
+    type: number
     sql: ${TABLE}.original_language_id ;;
   }
 
@@ -62,7 +75,7 @@ view: film {
   }
 
   dimension: rental_duration {
-    type: yesno
+    type: number
     sql: ${TABLE}.rental_duration ;;
   }
 
@@ -81,7 +94,7 @@ view: film {
     sql: ${TABLE}.special_features ;;
   }
 
-  dimension: title {
+  dimension: film_title {
     type: string
     sql: ${TABLE}.title ;;
   }
@@ -90,4 +103,5 @@ view: film {
     type: count
     drill_fields: [film_id, language.language_id, language.name, film_actor.count, film_category.count]
   }
+
 }

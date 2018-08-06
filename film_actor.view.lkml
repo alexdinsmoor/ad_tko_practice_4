@@ -27,6 +27,7 @@ view: film_actor {
   }
 
   measure: count {
+    hidden: yes
     type: count
     drill_fields: [film.film_id]
   }

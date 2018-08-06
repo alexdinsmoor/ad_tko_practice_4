@@ -2,12 +2,14 @@ view: language {
   sql_table_name: sakila.language ;;
 
   dimension: language_id {
+    hidden: yes
     primary_key: yes
-    type: yesno
+    type: number
     sql: ${TABLE}.language_id ;;
   }
 
   dimension_group: last_update {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -21,13 +23,14 @@ view: language {
     sql: ${TABLE}.last_update ;;
   }
 
-  dimension: name {
+  dimension: language_name {
     type: string
     sql: ${TABLE}.name ;;
   }
 
   measure: count {
+    hidden: yes
     type: count
-    drill_fields: [language_id, name, film.count]
+    drill_fields: [language_id, language_name, film.count]
   }
 }

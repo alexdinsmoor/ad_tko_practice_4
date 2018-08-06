@@ -2,6 +2,7 @@ view: customer {
   sql_table_name: sakila.customer ;;
 
   dimension: customer_id {
+    hidden: yes
     primary_key: yes
     type: number
     sql: ${TABLE}.customer_id ;;
@@ -14,7 +15,7 @@ view: customer {
 
   dimension: address_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.address_id ;;
   }
 
@@ -48,6 +49,7 @@ view: customer {
   }
 
   dimension_group: last_update {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -62,12 +64,12 @@ view: customer {
   }
 
   dimension: store_id {
-    type: yesno
+    type: number
     sql: ${TABLE}.store_id ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [customer_id, first_name, last_name, address.address_id]
+    drill_fields: [customer_rental_facts.detail*]
   }
 }

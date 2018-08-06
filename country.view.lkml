@@ -2,6 +2,7 @@ view: country {
   sql_table_name: sakila.country ;;
 
   dimension: country_id {
+    hidden: yes
     primary_key: yes
     type: number
     sql: ${TABLE}.country_id ;;
@@ -14,6 +15,7 @@ view: country {
   }
 
   dimension_group: last_update {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -27,7 +29,7 @@ view: country {
     sql: ${TABLE}.last_update ;;
   }
 
-  measure: count {
+  measure: country_count {
     type: count
     drill_fields: [country_id, city.count]
   }

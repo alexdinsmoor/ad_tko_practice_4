@@ -3,7 +3,7 @@ view: category {
 
   dimension: category_id {
     primary_key: yes
-    type: yesno
+    type: number
     sql: ${TABLE}.category_id ;;
   }
 
@@ -21,13 +21,13 @@ view: category {
     sql: ${TABLE}.last_update ;;
   }
 
-  dimension: name {
+  dimension: category_name {
     type: string
     sql: ${TABLE}.name ;;
   }
 
-  measure: count {
+  measure: category_count {
     type: count
-    drill_fields: [category_id, name, film_category.count]
+    drill_fields: [category_id, category_name, film_category.count]
   }
 }
