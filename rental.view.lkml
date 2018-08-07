@@ -118,26 +118,43 @@ view: rental {
     sql: DATEDIFF(${rental_history_facts.next_rental_raw},${rental.rental_raw}) ;;
   }
 
-  dimension: is_next_rental_within_30_days {
-    type: yesno
-    sql: ${days_until_next_rental} <= '30' ;;
+  parameter: repeat_purchase_logic_picker {
+    description: "Select the number of days for repeat purchase window"
+    type: unquoted
+    allowed_value: {
+      label: "30 days"
+      value: "30"
+    }
+    allowed_value: {
+      label: "60 days"
+      value: "60"
+    }
+    allowed_value: {
+      label: "90 days"
+      value: "90"
+    }
   }
 
-  measure: repeat_rental_count_within_30_days {
+  dimension: is_next_rental_within_selected_period {
+    type: yesno
+    sql: ${days_until_next_rental} <= {% parameter repeat_purchase_logic_picker %} ;;
+  }
+
+  measure: repeat_rental_count_within_selected_period {
     type: count_distinct
     sql: ${rental_id} ;;
     filters: {
-      field: is_next_rental_within_30_days
+      field: is_next_rental_within_selected_period
       value: "yes"
     }
     drill_fields: [customer_rental_facts.detail*]
   }
 
-  measure: 30_day_repeat_rental_rate {
-    description: "The percentage of customers who rent again within 30 days"
+  measure: repeat_rental_rate {
+    description: "The percentage of customers who rent again within selected period"
     type: number
     value_format_name: percent_1
-    sql: 1.0 * ${repeat_rental_count_within_30_days} / NULLIF(${rental.count},0) ;;
+    sql: 1.0 * ${repeat_rental_count_within_selected_period} / NULLIF(${rental.count},0) ;;
     drill_fields: [customer_rental_facts.detail*]
   }
 

@@ -10,10 +10,15 @@ datagroup: caching_policy {
 
 persist_with: caching_policy
 
+datagroup: explore_caching_policy {
+  max_cache_age: "1 hour"
+  sql_trigger: select max(rental_id) from sakil.rental ;;
+}
 
 # aggregate customer information
 
 explore: customer {
+  persist_with: explore_caching_policy
   hidden: yes
   label: "Customer Information"
   from: customer
@@ -53,11 +58,11 @@ explore: customer {
   }
 }
 
-#
 
 explore: rental {
   label: "Rental Information"
   from: rental
+  persist_with: explore_caching_policy
 
   # added to ensure we evaluate complete only months with representative data
   always_filter: {
