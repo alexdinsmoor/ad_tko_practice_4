@@ -60,7 +60,7 @@ view: film {
     sql: ${TABLE}.rating ;;
   }
 
-  dimension_group: release_year {
+  dimension_group: release_ {
     type: time
     timeframes: [
       raw,
@@ -87,6 +87,14 @@ view: film {
   dimension: replacement_cost {
     type: number
     sql: ${TABLE}.replacement_cost ;;
+    value_format_name: usd
+  }
+
+  measure: avg_replacement_cost {
+    type: average
+    sql: ${replacement_cost} ;;
+    value_format_name: usd
+
   }
 
   dimension: special_features {
@@ -101,7 +109,5 @@ view: film {
 
   measure: count {
     type: count
-    drill_fields: [film_id, language.language_id, language.name, film_actor.count, film_category.count]
-  }
-
+        drill_fields: [film.film_title, film_.release_year, film.rating, category.category_name, film.special_features, inventory.count, payment.amount]}
 }

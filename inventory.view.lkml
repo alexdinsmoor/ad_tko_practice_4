@@ -46,6 +46,6 @@ view: inventory {
 
   measure: count {
     type: count
-    drill_fields: [customer_rental_facts.detail*]
+    drill_fields: [film.film_title, film_.release_year, film.rating, category.category_name, film.special_features, inventory.count, payment.amount]
   }
 }

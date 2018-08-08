@@ -71,6 +71,7 @@ view: rental {
 
   measure: count {
     type: count
+    drill_fields: [customer_rental_facts.detail*]
   }
 
   # revenue info
@@ -86,7 +87,7 @@ view: rental {
     type: average
     sql: ${payment.amount} ;;
     value_format_name: usd
-    drill_fields: [customer_rental_facts.detail*]
+    drill_fields: [film.film_title, film_.release_year, film.rating, category.category_name, film.special_features, count, revenue, avg_revenue_per_rental]
   }
 
   # films checked out
@@ -109,6 +110,7 @@ view: rental {
     type: number
     sql: 1.0 * (${count_currently_checked_out} / nullif(${inventory.count},0)) ;;
     value_format_name: percent_2
+    drill_fields: [customer.first_name, customer.last_name, customer.email, customer.phone, film.title, rental_date, expected_return_date, is_currently_checked_out]
   }
 
   # repeat rental metrics
@@ -121,6 +123,10 @@ view: rental {
   parameter: repeat_purchase_logic_picker {
     description: "Select the number of days for repeat purchase window"
     type: unquoted
+    allowed_value: {
+      label: "7 days"
+      value: "7"
+    }
     allowed_value: {
       label: "30 days"
       value: "30"
@@ -155,7 +161,7 @@ view: rental {
     type: number
     value_format_name: percent_1
     sql: 1.0 * ${repeat_rental_count_within_selected_period} / NULLIF(${rental.count},0) ;;
-    drill_fields: [customer_rental_facts.detail*]
+    drill_fields: [customer.first_name, customer.last_name,customer.email, repeat_rental_rate]
   }
 
   measure: avg_days_until_next_rental {
@@ -227,5 +233,7 @@ view: rental {
       type: number
       sql: 1.0 * (${count_late_returns} / nullif(${rental.count},0)) ;;
       value_format_name: percent_2
+      drill_fields: [customer.first_name, customer.last_name,customer.email, percentage_late_returns]
+
     }
 }

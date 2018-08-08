@@ -92,7 +92,6 @@ view: customer_rental_facts {
 
   set: detail {
     fields: [
-      customer_id,
       customer.first_name,
       customer.last_name,
       customer.email,
