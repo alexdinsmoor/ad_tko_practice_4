@@ -1,7 +1,7 @@
 connection: "video_store"
 
 include: "*.view.lkml"         # include all views in this project
-# include: "*.dashboard.lookml"  # include all dashboards in this project
+include: "*.dashboard.lookml"  # include all dashboards in this project
 
 fiscal_month_offset: 3
 
