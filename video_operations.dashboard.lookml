@@ -26,7 +26,7 @@
     row: 0
     col: 0
     width: 6
-    height: 4
+    height: 5
   - title: 'Store 2: % of Inventory Checked Out'
     name: 'Store 2: % of Inventory Checked Out'
     model: ad_tko_practice_4
@@ -51,7 +51,7 @@
     row: 0
     col: 6
     width: 6
-    height: 4
+    height: 5
   - title: Customers With Movies Past Due
     name: Customers With Movies Past Due
     model: ad_tko_practice_4
@@ -93,7 +93,7 @@
     row: 0
     col: 12
     width: 12
-    height: 4
+    height: 5
   filters:
   - name: Grace Period Logic Picker
     title: Grace Period Logic Picker
